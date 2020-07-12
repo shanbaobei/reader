@@ -80,6 +80,12 @@ module.exports = {
         symbolId: 'icon-[name]'
       })
       .end()
+    config
+      // https://webpack.js.org/configuration/devtool/#development
+      .when(process.env.NODE_ENV === 'development',
+        config => config.devtool('source-map')
+      )
+
 
     config
       .when(process.env.NODE_ENV !== 'development',
@@ -88,7 +94,7 @@ module.exports = {
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
             .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
+              // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
             .end()
